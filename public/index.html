@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<!-- Assign our angular module -->
+<html ng-app="taskSia">
+<head>
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Mobile Optimization -->
+  <title>Node/Angular Todo App, TaskSia</title>
+  <!-- Scrolls -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> <!-- Load Bootstrap -->
+  <style>
+    html {overflow-y:scroll;}
+    body {padding-top:50px;}
+    #todo-list {margin-bottom:30px;}
+  </style>
+
+  <!-- Spells -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> <!-- Jquery -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  <script src="core.js"></script>
+
+</head>
+
+<!-- set the controller and get all todos -->
+<body ng-controller="mainController">
+  <div class="container"> 
+    <!-- Header and todo count -->
+    <div class="jumbotron text-center">
+      <h1>Welcome to TaskSia <span class="label label-info">{{ todos.length }}</span></h1>
+    </div>
+    <!-- TODO List -->
+    <div id="todo-list" class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <!-- Loop over the todos in $scope.todos -->
+        <div class="checkbox" ng-repeat="todo in todos">
+          <label>
+            <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }} {{ todo.urgency }} {{ todo.tags }}
+          </label>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Form to create todos -->
+    <div id="todo-form" class="row">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form>
+          <div class="form-group">
+            <!-- Bind this value to formData.text in Angular -->
+            <input type="text" class="form-control input-lg text-center" placeholder="Task goes here la~" ng-model="formData.text">
+            <input type="number" min="1" max="10" class="form-control input-lg text-center" placeholder="Urgency la~" ng-model="formData.urgency">
+            <input type="text" class="form-control input-lg text-center" placeholder="Tags here, seperated by comma la~" ng-model="formData.tags">
+          </div>
+          <!-- createToDo() will create new todos -->
+          <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
