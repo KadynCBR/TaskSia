@@ -7,45 +7,97 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Mobile Optimization -->
   <title>Node/Angular Todo App, TaskSia</title>
-  <!-- Scrolls -->
+  <!-- CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> <!-- Load Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> <!-- Load FontAwesome -->
   <style>
     html {overflow-y:scroll;}
     body {padding-top:50px;}
     #todo-list {margin-bottom:30px;}
   </style>
 
-  <!-- Spells -->
+  <!-- Scripts -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> <!-- Jquery -->
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
   <script src="core.js"></script>
 
 </head>
 
-<!-- set the controller and get all todos -->
+<!-- set the controller and get all task -->
 <body ng-controller="mainController">
   <div class="container"> 
-    <!-- Header and todo count -->
+    <!-- Header and task count -->
     <div class="jumbotron text-center">
-      <h1>Welcome to TaskSia <span class="label label-info">{{ todos.length }}</span></h1>
+      <h1>TaskSia!~ <span class="label label-info">{{ todos.length }}</span></h1>
     </div>
-    <!-- TODO List -->
-    <div id="todo-list" class="row">
-      <div class="col-sm-4 col-sm-offset-4">
-        <!-- Loop over the todos in $scope.todos -->
-        <div class="checkbox" ng-repeat="todo in todos">
-          <label>
-            <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.title }} {{ todo.assigndate }} 
-            {{ todo.duedate }} {{ todo.urgency }} {{ todo.swp }} {{ todo.tags }}
-          </label>
+    <!-- Search Form --> 
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <input type="text" class="form-control" placeholder="Search La~" ng-model="searchTask">
         </div>
-
-
       </div>
+    </form>
+    <!-- Display Tasks -->
+    <!-- Table view -->
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <!-- loop over all todos in $scope.todos -->
+        <thead>
+          <tr>
+            <th>
+              <a href="#" ng-click="sortType='urgency'; sortReverse = !sortReverse">
+                Urgency
+              <span ng-show="sortType == 'urgency' && !sortReverse" class="fa fa-caret-down"></span>
+              <span ng-show="sortType == 'urgency' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sortType='title'; sortReverse = !sortReverse">
+                Title
+                <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sortType='assigndate'; sortReverse = !sortReverse">
+                Assign Date
+                <span ng-show="sortType == 'assigndate' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'assigndate' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sortType='duedate'; sortReverse = !sortReverse">
+                Due Date
+                <span ng-show="sortType == 'duedate' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'duedate' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sortType='swp'; sortReverse = !sortReverse">
+                Category
+                <span ng-show="sortType == 'swp' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'swp' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="todo in todos | orderBy:sortType:sortReverse | filter:searchTask" ng-click="deleteTodo(todo._id)">
+            <th>{{todo.urgency}}</th>
+            <th>{{todo.title}}</th>
+            <th>{{todo.assigndate}}</th>
+            <th>{{todo.duedate}}</th>
+            <th>{{todo.swp}}</th>
+          </tr>
+        </tbody>
+      </table> 
     </div>
 
-    <!-- Form to create todos -->
-    <div id="todo-form" class="row">
+
+    <!-- Form to create tasks -->
+    <div id="task-form" class="row">
       <div class="col-sm-8 col-sm-offset-2 text-center">
         <form>
           <div class="form-group">

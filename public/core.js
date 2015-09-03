@@ -3,6 +3,10 @@ var taskSia = angular.module('taskSia', []);
 function mainController($scope, $http) {
   $scope.formData = {};
 
+  $scope.sortType = 'urgency'; // Set default sort type
+  $scope.sortReverse = false; // set default sort order
+  $scope.searchTask = ''; // For using a filter to search for tasks
+
   // when landing on the page, get all todos and show them
   $http.get('/api/todos')
     .success(function(data) {
