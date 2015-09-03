@@ -35,7 +35,8 @@
         <!-- Loop over the todos in $scope.todos -->
         <div class="checkbox" ng-repeat="todo in todos">
           <label>
-            <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }} {{ todo.urgency }} {{ todo.tags }}
+            <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.title }} {{ todo.assigndate }} 
+            {{ todo.duedate }} {{ todo.urgency }} {{ todo.swp }} {{ todo.tags }}
           </label>
         </div>
 
@@ -48,9 +49,19 @@
       <div class="col-sm-8 col-sm-offset-2 text-center">
         <form>
           <div class="form-group">
-            <!-- Bind this value to formData.text in Angular -->
-            <input type="text" class="form-control input-lg text-center" placeholder="Task goes here la~" ng-model="formData.text">
+            <!-- Bind this value to formData.title in Angular since this is what req is doing in the node API -->
+            <!-- Title -->
+            <input type="text" class="form-control input-lg text-center" placeholder="Title la~" ng-model="formData.title">
+            <!-- Urgency -->
             <input type="number" min="1" max="10" class="form-control input-lg text-center" placeholder="Urgency la~" ng-model="formData.urgency">
+            <!-- Assign Date -->
+            <input type="text" class="form-control input-lg text-center" placeholder="Assign Date la~ (YYYY-MM-DD)" ng-model="formData.assigndate">
+            <!-- Due Date -->
+            <!-- TODO: Add date picker for due date and assign date!-->
+            <input type="text" class="form-control input-lg text-center" placeholder="Due Date la~ (YYYY-MM-DD)" ng-model="formData.duedate">
+            <!-- SWP -->
+            <input type="number" min="1" max="3" class="form-control input-lg text-center" placeholder="School(1), Work(2), Personal(3) la~" ng-model="formData.swp">
+            <!-- Tags -->
             <input type="text" class="form-control input-lg text-center" placeholder="Tags here, seperated by comma la~" ng-model="formData.tags">
           </div>
           <!-- createToDo() will create new todos -->

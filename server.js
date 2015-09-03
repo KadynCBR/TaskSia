@@ -17,9 +17,21 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 // Define Model
+// This is where you get to set what a "todo" looks like.
+// This can be edited with ease thanks to mongoose.
+/*
+    Title: Title of task
+    Urgency: number from 1 - 10 describing task urgency at users discretion.
+    AssignDate: Date task entered the system.
+    DueDate: Date task must be completed.
+    SWP: Number from 1-3, School(1), Work(2), Personal(3). Organizes the task into three broad categories for later extension use.
+ */
 var Todo = mongoose.model('Todo', {
-  text: String,
+  title: String,
   urgency: Number,
+  assigndate: String,
+  duedate: String,
+  swp: Number,
   tags: String
 });
 
@@ -40,18 +52,23 @@ var Todo = mongoose.model('Todo', {
   // Create todo and send back all todos after creation
   app.post('/api/todos', function(req, res) {
     // create a todo, information comes from AJAX request from Angular
+    // This will take the Request body tag info and pass it into the this API.
     Todo.create({
-      text:req.body.text,
+      title:req.body.title,
       urgency:req.body.urgency,
+      assigndate:req.body.assigndate,
+      duedate:req.body.duedate,
+      swp:req.body.swp,
       tags:req.body.tags,
       done: false
     }, function(err, todo) {
       if (err)
         res.send(err);
+      // Send back todos with new one included!
       Todo.find(function(err, todos) {
         if (err)
           res.send(err)
-        res.json(todos);
+        res.json(todos); // Return todos in JSON format!
       });
     });
   });
@@ -63,8 +80,7 @@ var Todo = mongoose.model('Todo', {
     }, function (err, todo) {
       if (err)
         res.send(err);
-
-      // get and return all the todos after you create another
+      // get and return all the todos after you delete one.
       Todo.find(function(err, todos) {
         if (err)
           res.send(err)
