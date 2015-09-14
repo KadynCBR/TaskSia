@@ -48,7 +48,18 @@ var Todo = mongoose.model('Todo', {
       res.json(todos); // return all todos in JSON format
     });
   });  
-
+  
+  // Find Todos according to Category
+  app.get('/api/todos/swp/:swp', function(req, res) {
+    Todo.find({ 
+      swp: req.params.swp
+    }, function(err, todos) {
+      if (err)
+        res.send(err);
+      res.json(todos);
+    });
+  });
+  
   // Create todo and send back all todos after creation
   app.post('/api/todos', function(req, res) {
     // create a todo, information comes from AJAX request from Angular
@@ -72,7 +83,6 @@ var Todo = mongoose.model('Todo', {
       });
     });
   });
-
   // Delete a todo
   app.delete('/api/todos/:todo_id', function(req, res) {
     Todo.remove({

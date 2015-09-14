@@ -1,5 +1,2 @@
-https://scotch.io/tutorials/creating-a-single-page-todo-app-with-node-and-angular
-
-Followed the above initially
-
-succeeded in adding urgency and tags. (only in form/database) (NO FUNCTIONALITY YET.)
+<h1>Task/Todo Application made in MEAN<h1>
+<p> Application is a basic task Application made in MEAN stack. </p>
